@@ -1,98 +1,83 @@
 [Setup]
-AppName= NOME DO PROGRAMA
-AppVersion=1.0.0 VERS√O DO PROGRAMA COLOQUE O VALOR DA TAG DO GIT REFERNTE
-DefaultDirName={localappdata}\NOME PADR√O DO PASTA DO PROGRAMA
-DefaultGroupName=NOME DO GRUPO, QUE FICA NO MENU INICIAR DO WINDOWS
-OutputBaseFilename=NOME DO INSTALADOR EXEMPLO = EditalINSetup
-// N√O MEXA NESSAS OP«’ES //////////////////
+AppName=Nome do Programa
+AppVersion=1.0.0  ; Vers√£o do programa. Idealmente usar a tag do Git correspondente.
+DefaultDirName={localappdata}\NomeDaPasta  ; Caminho padr√£o onde o programa ser√° instalado.
+DefaultGroupName=Nome do Grupo no Menu Iniciar
+OutputBaseFilename=EditalINSetup  ; Nome do arquivo .exe gerado ap√≥s compilar
+
+; N√ÉO ALTERAR AS CONFIGURA√á√ïES ABAIXO
 Compression=lzma
 SolidCompression=yes
 PrivilegesRequired=lowest
-/////////////////////////////////////////////
-[Files]
-Source: "C:\CAMINHO \ PARA \ PASTA \ RAIZ DO PROGRAMA \*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
-// MANTENHA O PADR√O "\*" NO FINAL DO CAMINHO 
-// PARA INDICAR QUE VAI SER UTILIZADO OS ARQUIVOS 
-// DAQUELA PASTA EM ESPECIFICO
-/////////////////////////////////////////////
 
-// IDIOMA DO INSTALADOR, PADR√O PORTUGUES ///
+[Files]
+Source: "C:\CAMINHO\PARA\PASTA\RAIZ\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+; Importante: mantenha o "\*" no final do caminho para incluir todos os arquivos e subpastas da pasta raiz do seu programa.
+
 [Languages]
 Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
-/////////////////////////////////////////////
-// DECLARAR ATALHOS DO PROGRAMA ((PADR√O))
-[Icons]
-Name: "{userdesktop}\NOME DO PROGRAMA"; Filename: "{app}\ARQUIVO EXE DA PASTA DIST.exe"   
-Name: "{group}\Desinstalar NOME DO PROGRAMA"; Filename: "{uninstallexe}"
+; Define o idioma padr√£o do instalador como Portugu√™s.
 
-// ATALHOS OPCIONAIS DEPENDENDO DO PROGRAMA, COMO PASTA DE DOWNLOAD OU PLANILHAS EXCEL
+[Icons]
+; Atalhos padr√£o
+Name: "{userdesktop}\Nome do Programa"; Filename: "{app}\SeuPrograma.exe"
+Name: "{group}\Desinstalar Nome do Programa"; Filename: "{uninstallexe}"
+
+; Atalhos opcionais - s√≥ use se o programa gera arquivos nessas pastas
 Name: "{userdesktop}\1. EDITAIS DO DIA"; Filename: "{app}\_internal\1. EDITAIS DO DIA"
 Name: "{userdesktop}\2. ENVIADOS DOU"; Filename: "{app}\_internal\2. ENVIADOS DOU"
 Name: "{userdesktop}\3. EDITAIS COM ERROS"; Filename: "{app}\_internal\3. EDITAIS COM ERROS"
 Name: "{userdesktop}\4. RECIBOS DOU"; Filename: "{app}\_internal\4. RECIBOS DOU"
-/////////////////////////////////////////////
-// CODIGO PADR√O APENAS MUDE A FUN«√O DO PROGRAMA
+
 [Code]
 var
   CustomPage: TWizardPage;
   TermsPage: TInputOptionWizardPage;
-  MemoText: TMemo; // Declara a vari·vel MemoText
+  MemoText: TMemo;
 
 procedure InitializeWizard;
 begin
-  // Cria uma p·gina personalizada
-  CustomPage := CreateCustomPage(wpWelcome, 'InformaÁıes Importantes', 'Leia as informaÁıes abaixo antes de continuar.');
-
-  // Adiciona um memo na p·gina de informaÁıes
+  // P√°gina personalizada com informa√ß√µes do programa
+  CustomPage := CreateCustomPage(wpWelcome, 'Informa√ß√µes Importantes', 'Leia as informa√ß√µes abaixo antes de continuar.');
   MemoText := TMemo.Create(CustomPage);
   MemoText.Parent := CustomPage.Surface;
-  MemoText.ScrollBars := ssVertical; // Adiciona uma barra de rolagem vertical
-  MemoText.ReadOnly := True; // Torna o texto somente leitura
-  MemoText.WordWrap := True; // Habilita quebra de linha autom·tica
-  MemoText.TabStop := False; // Impede que o controle receba foco ao pressionar Tab
-  MemoText.Text := 'Este programa n„o armazena nenhuma informaÁ„o como Login, Senha ou dados sensÌveis respeitando a LGPD' +
-    ' e foi desenvolvido para automatizar (FUN«√O DO PROGRAMA), ' +
-    'permitindo verificar o envio de Editais e gerar relatÛrio no formato de Log. Ao utilizar este software, vocÍ concorda com os seguintes termos:' + #13#10#13#10 +
-    '1. Uso Respons·vel: O programa deve ser utilizado apenas para fins legais e autorizados. O usu·rio È respons·vel por garantir que possui permiss„o (FUN«√O DO PROGRAMA).' + #13#10#13#10 +
-    '2. LimitaÁ„o de Responsabilidade: O desenvolvedor n„o se responsabiliza por quaisquer danos, perdas ou consequÍncias decorrentes do uso do programa, incluindo erros no sistema que resultam falhas na automaÁ„o.' + #13#10#13#10 +
-    '3. Privacidade e SeguranÁa: O programa utiliza credenciais fornecidas pelo usu·rio para realizar login no sistema. O usu·rio È respons·vel por proteger suas credenciais e garantir que elas n„o sejam compartilhadas ou utilizadas de forma inadequada.';
-    
-  MemoText.Top := 10;
-  MemoText.Left := 10;
-  MemoText.Width := CustomPage.SurfaceWidth - 20;
-  MemoText.Height := CustomPage.SurfaceHeight - 20;
+  MemoText.ScrollBars := ssVertical;
+  MemoText.ReadOnly := True;
+  MemoText.WordWrap := True;
+  MemoText.TabStop := False;
+  MemoText.Text :=
+    'Este programa n√£o armazena nenhuma informa√ß√£o como Login, Senha ou dados sens√≠veis, respeitando a LGPD. ' +
+    'Ele foi desenvolvido para automatizar (DESCREVA A FUN√á√ÉO DO PROGRAMA), permitindo verificar o envio de editais e gerar relat√≥rios em log.' + #13#10#13#10 +
+    '1. Uso Respons√°vel: Utilize o programa apenas para fins autorizados e legais.' + #13#10#13#10 +
+    '2. Limita√ß√£o de Responsabilidade: O desenvolvedor n√£o se responsabiliza por danos causados pelo uso do programa.' + #13#10#13#10 +
+    '3. Privacidade e Seguran√ßa: O uso de credenciais √© de responsabilidade do usu√°rio.';
 
-  // Cria uma nova p·gina para os Termos de Uso
+  MemoText.SetBounds(10, 10, CustomPage.SurfaceWidth - 20, CustomPage.SurfaceHeight - 20);
+
+  // P√°gina de aceita√ß√£o dos termos
   TermsPage := CreateInputOptionPage(CustomPage.ID,
     'Termos de Uso',
     'Leia e aceite os Termos de Uso para continuar',
-    'VocÍ deve aceitar os Termos de Uso para instalar o programa.',
+    'Voc√™ deve aceitar os Termos de Uso para instalar o programa.',
     True, False);
-
-  // Adiciona a caixa de seleÁ„o para aceitar os Termos de Uso
   TermsPage.Add('Eu li e aceito os Termos de Uso.');
-
-  // Define a caixa de seleÁ„o como desmarcada por padr„o
   TermsPage.Values[0] := False;
 end;
 
 function NextButtonClick(CurPageID: Integer): Boolean;
 begin
-  // Verifica se o usu·rio est· na p·gina de Termos de Uso
   if CurPageID = TermsPage.ID then
   begin
-    // Se a caixa de seleÁ„o n„o estiver marcada, exibe uma mensagem de erro
     if not TermsPage.Values[0] then
     begin
-      MsgBox('Para instalar esse programa, È necess·rio aceitar os Termos de Uso.', mbError, MB_OK);
-      Result := False; // Impede que o usu·rio avance
+      MsgBox('Para instalar este programa, √© necess√°rio aceitar os Termos de Uso.', mbError, MB_OK);
+      Result := False;
       Exit;
     end;
   end;
-
-  Result := True; // Permite que o usu·rio avance
+  Result := True;
 end;
 
-// O READEME.pdf DEVE SER ESPECIFICAMENTE DO PROGRAMA NO FORMATO PDF
 [Run]
-Filename: "{app}\_internal\README.pdf"; Description: "Abrir instruÁıes do programa"; Flags: postinstall shellexec skipifsilent
+; Abre o manual do programa ap√≥s a instala√ß√£o
+Filename: "{app}\_internal\README.pdf"; Description: "Abrir instru√ß√µes do programa"; Flags: postinstall shellexec skipifsilent
