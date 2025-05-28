@@ -21,7 +21,7 @@ Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
 [Icons]
 ; Atalhos padrão
 Name: "{userdesktop}\Nome do Programa"; Filename: "{app}\SeuPrograma.exe"
-Name: "{group}\Desinstalar Nome do Programa"; Filename: "{uninstallexe}"
+Name: "{usersdesktop}\Desinstalar Nome do Programa"; Filename: "{uninstallexe}"
 
 ; Atalhos opcionais - só use se o programa gera arquivos nessas pastas
 Name: "{userdesktop}\1. EDITAIS DO DIA"; Filename: "{app}\_internal\1. EDITAIS DO DIA"
